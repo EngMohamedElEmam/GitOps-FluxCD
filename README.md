@@ -6,6 +6,9 @@
 ```
 After Deploying ARM template will use script create-cluster.sh to create the cluster from cluster services template 
 and modify create-cluster.sh line 31 and 52 for the correct path for repo working directory 
+
+ARM Template: https://github.com/EngMohamedElEmam/Azure-ARM-Template
+
 ```
 
 # Then will use bash from Jumpbserver to run the following 
