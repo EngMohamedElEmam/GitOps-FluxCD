@@ -1,0 +1,6 @@
+{
+  "tenantId": "$AZURE_TENANT_ID",
+  "subscriptionId": "$AZURE_SUBSCRIPTION_ID",
+  "resourceGroup": "$DNS_RESOURCE_GROUP",
+  "useManagedIdentityExtension": true
+}

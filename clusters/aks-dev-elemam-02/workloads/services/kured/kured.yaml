@@ -1,0 +1,16 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: kured
+  namespace: flux-system
+spec:
+  interval: 5m
+  dependsOn:
+    - name: istio-operator
+    - name: istio-system
+  path: "./kubernetes-infrastructure/common/kured/"
+  prune: true
+  validation: client
+  sourceRef:
+    kind: GitRepository
+    name: flux-system

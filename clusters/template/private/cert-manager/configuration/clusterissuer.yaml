@@ -1,0 +1,37 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  namespace: cert-manager
+spec:
+  acme:
+    email: $LETSENCRYPT_CONTACT
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-secret
+    solvers:
+    - dns01:
+        azureDNS:
+          subscriptionID: "$AZURE_SUBSCRIPTION_ID"
+          resourceGroupName: "$DNS_RESOURCE_GROUP"
+          hostedZoneName: "$DNS_HOSTNAME"
+          environment: AzurePublicCloud
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+  namespace: cert-manager
+spec:
+  acme:
+    email: $LETSENCRYPT_CONTACT
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-secret-staging
+    solvers:
+    - dns01:
+        azureDNS:
+          subscriptionID: "$AZURE_SUBSCRIPTION_ID"
+          resourceGroupName: "$DNS_RESOURCE_GROUP"
+          hostedZoneName: "$DNS_HOSTNAME"
+          environment: AzurePublicCloud

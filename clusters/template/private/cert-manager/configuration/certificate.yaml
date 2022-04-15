@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: $LETSENCRYPT_SECRET
+  namespace: istio-system
+spec:
+  secretName: $LETSENCRYPT_SECRET
+  commonName: "*.$DNS_HOSTNAME"
+  dnsNames:
+  - "*.$DNS_HOSTNAME"
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod

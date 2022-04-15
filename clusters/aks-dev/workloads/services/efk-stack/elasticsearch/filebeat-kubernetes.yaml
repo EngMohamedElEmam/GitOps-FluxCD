@@ -1,0 +1,78 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: filebeat
+  namespace: monitoring-efk
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart:  filebeat
+      version: '7.12.1'
+      sourceRef:
+        kind: HelmRepository
+        name: elasticsearch
+        namespace: flux-system
+      interval: 1m
+      
+  test:
+    ignoreFailures: true
+  
+  values:
+    daemonset:
+      hostNetworking: true
+      dnsConfig: ClusterFirstWithHostNet
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "100Mi"
+        limits:
+          cpu: "768m"
+          memory: "200Mi"
+
+      filebeatConfig:
+        filebeat.yml: |
+
+          filebeat.inputs:
+          - type: container
+            enabled: true
+            paths:
+              - /var/log/containers/*.log
+
+            # To be used by Logstash for distinguishing index names while writing to elasticsearch.
+            fields_under_root: true
+            fields:
+              index_prefix: k8s-logs
+
+            # Enrich events with k8s, cloud metadata 
+            processors:
+              - add_cloud_metadata:
+              - add_host_metadata:
+              - add_kubernetes_metadata:
+                  host: ${NODE_NAME}
+                  matchers:
+                  - logs_path:
+                      logs_path: "/var/log/containers/"
+          # Send events to Logstash.
+          output.logstash:
+            enabled: true
+            hosts: ["logstash-logstash:5044"]
+
+          # You can set logging.level to debug to see the generated events by the running filebeat instance.
+          logging.level: info
+          logging.to_files: false
+          logging.files:
+            path: /var/log/filebeat
+            name: filebeat
+            keepfiles: 7
+            permissions: 0644
+
+
+      deployment:
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+          limits:
+            cpu: "768m"
+            memory: "200Mi"

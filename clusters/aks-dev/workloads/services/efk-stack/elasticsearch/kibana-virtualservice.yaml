@@ -1,0 +1,43 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: kibana
+  namespace: monitoring-efk
+spec:
+  hosts:
+  - "kibana.prd.eastus.aks.gk.services"
+  gateways:
+  - kibana-gateway-int
+  http:
+  - route:
+    - destination:
+        host: kibana-kibana
+        port:
+          number: 5601
+
+
+
+
+
+
+#apiVersion: networking.istio.io/v1beta1
+#kind: VirtualService
+#metadata:
+#  name: sonarqube
+#  namespace: sonarqube
+#spec:
+#  hosts:
+#  - "sonarqube.test.elemamm.developers.global.io"
+#  gateways:
+#  - sonarqube-gateway-ext
+#  http:
+#  - match:
+#    - uri:
+#        prefix: /
+#    route:
+#    - destination:
+#        port:
+#          number: 9000
+#        host: sonarqube
+
+

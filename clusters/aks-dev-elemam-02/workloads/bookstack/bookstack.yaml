@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstack
+  namespace: bookstack
+spec:
+  selector:
+    matchLabels:
+        app: bookstack
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: bookstack
+    spec:
+      containers:
+      - env:
+        - name: namespace
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: podname
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: nodename
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: DB_DATABASE
+          value: bookstack
+        - name: DB_HOST
+          value: mysql
+        - name: DB_PASSWORD
+          value: pass
+        - name: DB_USERNAME
+          value: user
+        - name: MAIL_USERNAME
+          value: example@test.com
+        - name: MAIL_PASSWORD 
+          value: mailpass
+        - name: MAIL_HOST
+          value: smtp.server.com
+        - name: MAIL_PORT
+          value: '465'
+        - name: MAIL_ENCRYPTION
+          value: SSL
+        - name: MAIL_DRIVER
+          value: smtp
+        - name: MAIL_FROM
+          value: no-reply@test.com
+        - name: APP_URL
+          value: http://wwww.test.com
+        image: solidnerd/bookstack:latest
+        name: bookstack
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: 80
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /login
+            port: 80
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 15
+        ports:
+        - name: http
+          containerPort: 80
+        volumeMounts:
+        - mountPath: /var/www/bookstack/public/uploads
+          name: bookstack-uploads
+        - mountPath: /var/www/bookstack/public/storage
+          name: bookstack-storage
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bookstack
+  name: bookstack
+  namespace: bookstack
+spec:
+  type: LoadBalancer 
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: bookstack

@@ -1,0 +1,148 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: istio-default
+spec:
+  meshConfig:
+    accessLogFile: /dev/stdout
+  profile: default
+  components:
+    pilot:
+      k8s:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+        hpaSpec:
+          maxReplicas: 3
+          minReplicas: 1
+        replicaCount: 1
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - istiod
+              topologyKey: "kubernetes.io/hostname"
+#    cni:
+#      enabled: true
+    ingressGateways:
+    - name: istio-internal-ingressgateway
+      enabled: true
+      label:
+        istio: istio-internal-ingressgateway
+        app: istio-internal-ingressgateway
+      k8s:
+        service:
+          ports:
+            - port: 15021
+              targetPort: 15021
+              name: status-port
+            - port: 80
+              targetPort: 8080
+              name: http2
+            - port: 443
+              targetPort: 8443
+              name: https
+            - port: 15443
+              targetPort: 15443
+              name: tls
+            - port: 7473
+              targetPort: 7473
+              name: tcp-https
+            - port: 7687
+              targetPort: 7687
+              name: tcp-bolt
+        serviceAnnotations:
+          service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+        hpaSpec:
+          maxReplicas: 5
+          metrics:
+          - resource:
+              name: cpu
+              targetAverageUtilization: 80
+            type: Resource
+          minReplicas: 1
+          scaleTargetRef:
+            apiVersion: apps/v1
+            kind: Deployment
+            name: istio-internal-ingressgateway
+        replicaCount: 1
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 768Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        strategy:
+          rollingUpdate:
+            maxSurge: 100%
+            maxUnavailable: 25%
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - istio-internal-ingressgateway
+              topologyKey: "kubernetes.io/hostname"
+    - name: istio-ingressgateway
+      enabled: true
+      label:
+        istio: istio-ingressgateway
+        app: istio-ingressgateway
+      k8s:
+        hpaSpec:
+          maxReplicas: 5
+          metrics:
+          - resource:
+              name: cpu
+              targetAverageUtilization: 80
+            type: Resource
+          minReplicas: 1
+          scaleTargetRef:
+            apiVersion: apps/v1
+            kind: Deployment
+            name: istio-ingressgateway
+        replicaCount: 1
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 768Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        strategy:
+          rollingUpdate:
+            maxSurge: 100%
+            maxUnavailable: 25%
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - istio-ingressgateway
+              topologyKey: "kubernetes.io/hostname"          
+ # values:
+ #   cni:
+ #     excludeNamespaces:
+ #      - istio-system
+ #      - kube-system
+ #     logLevel: info
+ # addonComponents:
+ #   grafana:
+ #     enabled: true
+ #   kiali:
+ #     enabled: true
+ #   prometheus:
+ #     enabled: true

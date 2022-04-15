@@ -1,0 +1,12 @@
+- op: add
+  path: /rules/0
+  value:
+    apiGroups: 
+    - networking.istio.io
+    resources:
+    - gateways
+    - virtualservices
+    verbs:
+    - get
+    - watch
+    - list

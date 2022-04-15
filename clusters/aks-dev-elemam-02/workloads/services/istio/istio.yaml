@@ -1,0 +1,29 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: istio-operator
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: "./kubernetes-infrastructure/common/istio/operator/"
+  prune: true
+  validation: client
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: istio-system
+  namespace: flux-system
+spec:
+  interval: 5m
+  dependsOn:
+    - name: istio-operator
+  path: "./kubernetes-infrastructure/common/istio/system/"
+  validation: client
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system

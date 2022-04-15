@@ -1,0 +1,34 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: kiali-server
+  namespace: istio-system
+spec:
+  hosts:
+  - "kiali.test.elemamm.developers.global.io"
+  gateways:
+  - kiali-gateway-ext
+  http:
+  - route:
+    - destination:
+        host: kiali
+        port:
+          number: 20001
+      weight: 100
+#---
+#apiVersion: networking.istio.io/v1alpha3
+#kind: DestinationRule
+#metadata:
+#  name: kiali-destinationrule
+#  namespace: istio-system
+#spec:
+#  host: kiali
+#  trafficPolicy:
+#    tls:
+#      mode: DISABLE
+...
+
+  #- name: "dashboard-routes"
+  #  match:
+  #  - uri:
+  #      prefix: "/ui"

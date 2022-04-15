@@ -1,0 +1,31 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sonarqube
+  namespace: sonarqube
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: sonarqube
+      version: '9.6.2'
+      sourceRef:
+        kind: HelmRepository
+        name: sonarqube
+        namespace: flux-system
+      interval: 1m
+      
+  test:
+    ignoreFailures: true
+  
+  values:
+    plugins:
+      install:
+        - "https://github.com/hkamel/sonar-auth-aad/releases/download/1.2.0/sonar-auth-aad-plugin-1.2.0.jar"
+      image: rjkernick/alpine-wget:latest
+    postgresql: 
+      persistence:
+        storageClass: managed-standard-retain
+        size: 1Gi
+    podLabels:
+      app: sonarqube

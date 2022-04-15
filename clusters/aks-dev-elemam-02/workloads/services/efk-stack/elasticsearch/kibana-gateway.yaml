@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: kibana-gateway-int
+  namespace: monitoring-efk
+spec:
+  selector:
+    app: istio-internal-ingressgateway
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: star-prd-eastus-aks-gk-services
+    hosts:
+    - "kibana.prd.eastus.aks.gk.services"

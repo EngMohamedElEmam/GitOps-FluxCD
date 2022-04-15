@@ -1,0 +1,11 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: external-dns
+  namespace: external-dns
+spec:
+  type: 0
+  # Resource ID for the Managed Service Identity to impersonate
+  resourceID: /subscriptions/89545087-0d37-4f6e-af2c-77c69b8e0391/resourceGroups/aks-dev-elemam-02-nodes/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-dev-elemam-02-dns
+  # Client ID of the Managed Service Identity
+  clientID: aabe15d4-e26a-4729-8616-69855baa18ee

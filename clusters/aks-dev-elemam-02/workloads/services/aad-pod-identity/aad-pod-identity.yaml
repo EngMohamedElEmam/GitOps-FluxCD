@@ -1,0 +1,31 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: aad-pod-identity-config
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: "./kubernetes-infrastructure/clusters/aks-dev-elemam-02/private/aad-pod-identity/configuration/"
+  prune: true
+  validation: client
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: aad-pod-identity
+  namespace: flux-system
+spec:
+  interval: 5m
+  dependsOn:
+    - name: istio-operator
+    - name: istio-system
+    - name: aad-pod-identity-config
+  path: "./kubernetes-infrastructure/common/aad-pod-identity/"
+  prune: true
+  validation: client
+  sourceRef:
+    kind: GitRepository
+    name: flux-system

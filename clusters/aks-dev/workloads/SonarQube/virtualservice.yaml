@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: sonarqube
+  namespace: sonarqube
+spec:
+  hosts:
+  - "sonarqube.test.elemamm.developers.global.io"
+  gateways:
+  - sonarqube-gateway-ext
+  http:
+  - route:
+    - destination:
+        host: sonarqube-sonarqube
+        port:
+          number: 9000

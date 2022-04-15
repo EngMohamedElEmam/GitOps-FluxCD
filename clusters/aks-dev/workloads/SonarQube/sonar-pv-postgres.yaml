@@ -1,0 +1,15 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: postgres-ext-pv
+spec:
+  capacity:
+    storage: 8Gi
+  storageClassName: default
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  azureDisk:
+    kind: Managed
+    diskName: postgresqldisk
+    diskURI: /subscriptions/1d75808f-19a0-4358-ae30-dc91e1caab0d/resourceGroups/aks-dev-elemam-01-nodes/providers/Microsoft.Compute/disks/postgresqldisk

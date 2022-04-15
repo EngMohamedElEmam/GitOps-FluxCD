@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: sonarqube-gateway-ext
+  namespace: sonarqube
+spec:
+  selector:
+    app: istio-ingressgateway
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: star-test-elemamm-developers-global-io
+    hosts:
+    - "sonarqube.test.elemamm.developers.global.io"

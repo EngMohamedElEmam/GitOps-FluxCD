@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: kubernetes-dashboard-gateway-ext
+  namespace: kubernetes-dashboard
+spec:
+  selector:
+    app: istio-ingressgateway
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: star-test-elemamm-developers-global-io
+    hosts:
+    - "kubernetes-dashboard.test.elemamm.developers.global.io"

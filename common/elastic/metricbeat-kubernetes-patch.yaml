@@ -1,0 +1,19 @@
+- op: remove
+  path: /spec/template/spec/containers/0/env
+- op: add
+  path: /spec/template/spec/containers/0/env
+  value:
+  - name: ELASTIC_CLOUD_ID
+    valueFrom:
+      secretKeyRef:
+        name: elastic-secrets
+        key: ELASTIC_CLOUD_ID
+  - name: ELASTIC_CLOUD_AUTH
+    valueFrom:
+      secretKeyRef:
+        name: elastic-secrets
+        key: ELASTIC_CLOUD_AUTH_METRICBEAT
+  - name: NODE_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: spec.nodeName

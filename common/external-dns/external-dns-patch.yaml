@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+spec:
+  template:
+    metadata:
+      labels:
+        aadpodidbinding: external-dns
+    spec:
+      containers:
+        - name: external-dns
+          args:
+          - --source=service
+          - --source=ingress
+          - --source=istio-gateway
+          - --source=istio-virtualservice
+          - --provider=azure
+          volumeMounts:
+          - name: azure-config-file
+            mountPath: /etc/kubernetes
+            readOnly: true
+      volumes:
+      - name: azure-config-file
+        secret:
+          secretName: azure-config-file
+      

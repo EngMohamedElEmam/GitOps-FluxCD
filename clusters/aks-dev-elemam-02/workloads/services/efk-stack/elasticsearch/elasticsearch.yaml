@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: elasticsearch
+  namespace: monitoring-efk
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: elasticsearch
+      version: '7.12.1'
+      sourceRef:
+        kind: HelmRepository
+        name: elasticsearch
+        namespace: flux-system
+      interval: 1m
+      
+  test:
+    ignoreFailures: true
+  
+  values:
+    masterService: "elasticsearch"
+    replicas: 2
+    #antiAffinity: "soft"
+
+    # Shrink default JVM heap.
+    #esJavaOpts: "-Xmx128m -Xms128m"
+
+    # Allocate smaller chunks of memory per pod.
+    resources:
+      requests:
+        cpu: "768m"
+        memory: "1Gi"
+      limits:
+        cpu: "768m"
+        memory: "2Gi"
+
+    # Request smaller persistent volumes.
+    volumeClaimTemplate:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: managed-standard
+      resources:
+        requests:
+          storage: 2Gi
+ 

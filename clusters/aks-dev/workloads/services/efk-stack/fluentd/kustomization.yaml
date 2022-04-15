@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+#- namespace.yaml
+#- storageclass.yaml
+#- pv.yaml
+#- helmrepository.yaml
+#- helmrelease.yaml
+#- kibana.yaml
+#- logstash.yaml
+#- filebeat-kubernetes.yaml
+#- metricbeat-kubernetes.yaml

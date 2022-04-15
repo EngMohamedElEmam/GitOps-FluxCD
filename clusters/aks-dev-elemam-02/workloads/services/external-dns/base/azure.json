@@ -1,0 +1,6 @@
+{
+  "tenantId": "defa54f3-4877-425b-8965-eb5fbfd108ce",
+  "subscriptionId": "89545087-0d37-4f6e-af2c-77c69b8e0391",
+  "resourceGroup": "Azure-DNS",
+  "useManagedIdentityExtension": true
+}

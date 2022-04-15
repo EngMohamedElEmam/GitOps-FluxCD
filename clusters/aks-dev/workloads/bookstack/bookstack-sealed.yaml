@@ -1,0 +1,26 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: bookstack
+  namespace: bookstack
+spec:
+  encryptedData:
+    DB_PASSWORD: AgASV92d4MKJOYAgF+nfBKi+AYEERKBwot9+ZIuJATZ/pcwRyHPqqA4KJtTBkpNKHeoG36jvWthnPxadipzsw3QtdVV6mF/FDjn0FYlwCEKXAl28oRmmdpkEjxqFOk0fnb/7ShD2UesCpZtwFtavZ1KIYIpUHzcVISRMTHkWeXoaBVIAFBz+EYo5M8K/NqIbhzF7EUDagb+Tp5MBgEV9a93GSQ4j3AbJQpSEc6/SqwPT1eZ00bn8XSjPfYboH94d8PEWeGj0k1EQMQwAU8P6H5RO2VGYfbzBvug2FDjRuhe+qox19jeB1S2Me1TvABlgamknmh+7AEh7bO6DOHZ+Ls3cWkVxam16xGJYkWIaHrjmdPuPOnNbMCoPkeSVRzFehCtItwv3ZvDfX5s6ZQylP/x1NVH+7/v+uxZK95jh9VZKWR9JdmClkO78LA6hHfDlCtuBaT/UWCZX0SoRgiXY4HLm0XNBhNpSPydjhFmhTD1rM/3d1PPa5sY6vapQmEzDS128iLQwLYfVpcCVLsWSUwrEDjeCgdvZ1YzaoxhQv0r/IIyrJ7NWmAZ49acfp0AccT3gLUtQtDDlfc3eddmJy1RIKlEaCbF3vbFsckfJ4ueod3MiEm+SZyLkAynDp7t65h+LHEdOS80SsaP+lccxyXtxdfTO7cSyy8fgQFvldseAjeL/LNIll0iQdTCAke9ueFkvLK3g0ux3nXqapSAsYhCJAA==
+  template:
+    metadata:
+      creationTimestamp: null
+      managedFields:
+      - apiVersion: v1
+        fieldsType: FieldsV1
+        fieldsV1:
+          f:data:
+            .: {}
+            f:DB_PASSWORD: {}
+          f:type: {}
+        manager: kubectl-create
+        operation: Update
+        time: "2021-05-31T20:28:44Z"
+      name: bookstack
+      namespace: bookstack
+    type: Opaque

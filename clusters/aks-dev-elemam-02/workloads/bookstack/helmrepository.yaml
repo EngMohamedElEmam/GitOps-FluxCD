@@ -1,0 +1,28 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: mariadb
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://charts.bitnami.com/bitnami
+  
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: common
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://library-charts.k8s-at-home.com
+
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: bookstack
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://k8s-at-home.com/charts/

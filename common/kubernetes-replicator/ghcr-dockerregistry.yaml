@@ -1,0 +1,17 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: ghcr
+  namespace: default
+spec:
+  encryptedData:
+    .dockerconfigjson: AgDUPKxfyc9vUUpbgCZB1895wlEYNLPbXsMa1UdtSjwMruI45Gsl8/7PUZsoBhG6YFKMoPEzbscfuuEnABWFx1nQAf2AU3pNu4CFdow+OJIN0Lco2XR0OF/RSkx6Rbxm7i0yumQzisXfYZhXJDwU0KUltVRflpElyACOUi3illm93e4pUkJs8nPdrvYPMSX8+aeiAP/Tz0LuGz3ufrFy6MFeckgyPr776j1IYzCP7Zj+ulHrW5wLA4N0oPY580Ztj6LyV6yftlZghQmGtohdZltJbr/Zx6nidxIxpRUZWWwG4PlPhMC2u3fp35r3SRmJBH4CV2SWWoB6LylPd/91J+DsT1Hw+Pd978lOCU+267PlU0EijlNdkFIPFZ1jtABS8o38OUTc+nmvbsIh399MYn4EpzqGUBe21jK1Yv9fNyAslN9KU31jQ9zzC4YcUt2Ioekvdwhy4e/tJJGiuEzkcTbO/BbJdjmjcxSjE1u/g3Ef2EQTPV5uVEkR3zD+2N1oTfG75ngU/J3blseHZ5ERpedLud95rRIGiPAAWOgM2GCr0BC5+6udaXvmfNstGIS/h/ibyuCTa9UvG83nmNAQewcP42K7haBWNzvf+Awy0qVsenlGsQwx3xGK2dUlb7lhuKdRjHSkJmMT3VguN9X0DERFH21T0l6O8C33ga5Gn31isLfEDFHf6jXB6St4iZydO7QB0//+tloAwUHwrndLUqt3R84ZF4NBd6vxg4LpP77qeC3SMm81E5iA1hNkM8R3c1ixiPv1RRzEjjod7MUm6n73jbuhKQ3FXiNl9Nf4+x+ytEwudrXrnEkWd0JyrkQTn4dlloh1e03dtib8a+3xoB7qgIgDBJ5++lBumWZ02IYWKj2q+EyG6bUrtT7WEJjH2Ncer+UNkO5fktQm2kU7H41Wmtvtu95zRj7y/0bt3rnaaGBy8jQIebUtFqRDCRTkfc/GYSC7DzSkwhvceXYh53dh6xHjNLlA0WQohPLCOIAKnPMGeIirzPPVV7YvoOXP+4yOVw==
+  template:
+    metadata:
+      annotations:
+        replicator.v1.mittwald.de/replicate-to: .*
+      creationTimestamp: null
+      name: ghcr
+      namespace: default
+    type: kubernetes.io/dockerconfigjson

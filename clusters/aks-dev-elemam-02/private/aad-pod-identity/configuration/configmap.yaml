@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: values
+  namespace: aad-pod-identity
+data:
+  values.yaml: |-
+    mic:
+      resources:
+        limits:
+          cpu: 200m
+          memory: 1024Mi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+    nmi:
+      resources:
+        limits:
+          cpu: 200m
+          memory: 512Mi
+        requests:
+          cpu: 50m
+          memory: 256Mi

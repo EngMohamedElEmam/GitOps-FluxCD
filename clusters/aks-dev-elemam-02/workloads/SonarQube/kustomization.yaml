@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- namespace.yaml
+- helmrepository.yaml
+- helmrelease.yaml
+- virtualservice.yaml
+- gateway.yaml
+#- sonar-pvc-to-exsiting-pv.yaml
+#- sonar-pvc.yaml
+#- service.yaml
+
+
+#- sonar-pvc-postgres.yaml
+#- sonar-pv-postgres.yaml
+#- sonarqubesecret.yaml
+#- sealedsecret.yaml
+#- configmap.yaml

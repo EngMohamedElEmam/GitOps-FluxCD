@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+spec:
+  hosts:
+  - "kubernetes-dashboard.test.elemamm.developers.global.io"
+  gateways:
+  - kubernetes-dashboard-gateway-ext
+  http:
+  - route:
+    - destination:
+        host: kubernetes-dashboard
+        port:
+          number: 8443

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-sonarqube-postgresql-0
+  namespace: sonarqube
+  labels:
+    app: postgresql
+spec:
+  storageClassName: managed-premium-retain
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: "pvc-e28b1d35-3bdc-45aa-9880-ce604ec66ea7"

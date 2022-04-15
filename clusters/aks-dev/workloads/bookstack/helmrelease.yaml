@@ -1,0 +1,78 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bookstack
+  namespace: bookstack
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: bookstack
+      version: 1.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: bookstack
+        namespace: flux-system
+      interval: 1m
+      
+  test:
+    ignoreFailures: true
+  
+  values:
+    image:
+      repository: ghcr.io/linuxserver/bookstack
+      pullPolicy: IfNotPresent
+    strategy:
+      type: Recreate
+    env:
+      APP_URL: https://bookstack.test.elemamm.developers.global.io
+      PUID: 1000
+      PGID: 1000
+    # TZ:
+      DB_HOST: bookstackmysql.mysql.database.azure.com
+      DB_USERNAME: bookstack@bookstackmysql
+      DB_PASSWORD: mysqladmin1@
+        #envFrom:
+        #  - secretRef:
+        #    name: bookstack
+      DB_DATABASE: bookstackdb
+    
+    persistence:
+      config:
+        enabled: true
+        mountPath: /config
+        storageClass: managed-standard
+        accessMode: ReadWriteOnce
+        size: 1Gi
+    podLabels:
+          app: bookstack
+    #mariadb:
+    #  enabled: true
+    #  image:
+        #registry: ghcr.io
+        #repository: linuxserver/mariadb
+        #tag: alpine
+    #    pullPolicy: IfNotPresent
+    #  architecture: standalone
+    #  auth:
+    #     database: bookstackapp
+    #     username: bookstack
+    #     password: bookstackpassword
+    #     #rootPassword: bookstack
+    #  primary:
+    #    podLabels:
+    #      app: bookstack
+    #    persistence:
+    #      enabled: true
+    #      storageClassName: managed-standerd
+    #      accessMode: ReadWriteOnce 
+    #      size: 1Gi
+    #  containerSecurityContext:
+    #    enabled: true
+    #    runAsUser: 1000
+    #  podSecurityContext:
+    #    enabled: true
+    #    fsGroup: 1000
+      #volumePermissions:
+      #  enabled: true      
+      

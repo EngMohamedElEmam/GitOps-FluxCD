@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kibana
+  namespace: monitoring-efk
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart:  kibana
+      version: '7.12.1'
+      sourceRef:
+        kind: HelmRepository
+        name: elasticsearch
+        namespace: flux-system
+      interval: 1m
+      
+  test:
+    ignoreFailures: true
+  
+  values:
+    elasticsearchHosts: "http://elasticsearch:9200"
+    resources:
+      requests:
+        cpu: "512m"
+        memory: "1Gi"
+      limits:
+        cpu: "768m"
+        memory: "1Gi"

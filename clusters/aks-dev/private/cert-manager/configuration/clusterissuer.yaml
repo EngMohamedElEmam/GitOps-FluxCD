@@ -1,0 +1,37 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  namespace: cert-manager
+spec:
+  acme:
+    email: Mohamed.Elemam@global.net
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-secret
+    solvers:
+    - dns01:
+        azureDNS:
+          subscriptionID: "89545087-0d37-4f6e-af2c-77c69b8e0391"
+          resourceGroupName: "dns-dev-rg"
+          hostedZoneName: "test.elemamm.developers.global.io"
+          environment: AzurePublicCloud
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+  namespace: cert-manager
+spec:
+  acme:
+    email: Mohamed.Elemam@global.net
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-secret-staging
+    solvers:
+    - dns01:
+        azureDNS:
+          subscriptionID: "89545087-0d37-4f6e-af2c-77c69b8e0391"
+          resourceGroupName: "dns-dev-rg"
+          hostedZoneName: "test.elemamm.developers.global.io"
+          environment: AzurePublicCloud

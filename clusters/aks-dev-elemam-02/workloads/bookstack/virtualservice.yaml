@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: bookstack
+  namespace: bookstack
+spec:
+  hosts:
+  - "bookstack.test.elemamm.developers.global.io"
+  gateways:
+  - bookstack-gateway-ext
+  http:
+  - route:
+    - destination:
+        host: bookstack
+        port:
+          number: 80

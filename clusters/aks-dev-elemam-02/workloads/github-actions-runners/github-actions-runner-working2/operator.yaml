@@ -1,0 +1,29 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: github-actions-runner-operator
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: "./clusters/aks-dev/private/github-actions-runner/controller/"
+  prune: true
+  validation: client
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: github-actions-runner-config
+  namespace: flux-system
+spec:
+  interval: 5m
+  dependsOn:
+    - name: github-actions-runner-operator
+  path: "./clusters/aks-dev/private/github-actions-runner/config/"
+  validation: client
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
